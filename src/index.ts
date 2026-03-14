@@ -3,13 +3,8 @@ import { Client, GatewayIntentBits, Collection, Events, ChatInputCommandInteract
 dotenv.config();
 import * as ping from './commands/ping';
 import * as explore from './commands/explore';
+import { Command } from './types/index';
 
-interface Command{
-    data: {
-        name: string; toJson(): unknown;
-    };
-    execute: (interaction: ChatInputCommandInteraction) => Promise<void>;
-}
 
 const client = new Client({
     intents: [GatewayIntentBits.Guilds]

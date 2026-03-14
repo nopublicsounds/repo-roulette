@@ -1,20 +1,8 @@
 import { Octokit  } from "@octokit/rest";
 import { components } from "@octokit/openapi-types";
-
+import { StarsRange, FetchRandomReposParams } from "../types/index";
 type Repo = components["schemas"]["repo-search-result-item"];
 
-type StarsRange = {
-  min: number;
-  max: number;
-};
-
-type FetchRandomReposParams = {
-  year?: number;
-  language?: string;
-  stars?: StarsRange;
-  topic?: string;
-  count?: number;
-};
 
 const octokit = new Octokit({
     auth: process.env.GITHUB_TOKEN

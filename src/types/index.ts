@@ -1,6 +1,6 @@
 import { Collection, ChatInputCommandInteraction } from 'discord.js';
 
-interface Command{
+export interface Command{
     data: {
         name: string; toJson(): unknown;
     };
@@ -12,3 +12,16 @@ declare module 'discord.js'{
         commands: Collection<string, Command>;
     }
 }
+
+export type StarsRange = {
+  min: number;
+  max: number;
+};
+
+export type FetchRandomReposParams = {
+  year?: number;
+  language?: string;
+  stars?: StarsRange;
+  topic?: string;
+  count?: number;
+};

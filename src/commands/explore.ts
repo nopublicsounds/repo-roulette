@@ -1,10 +1,6 @@
 import { ChatInputCommandInteraction, SlashCommandBuilder } from 'discord.js';
 import { fetchRandomRepos } from '../lib/github';
-
-type StarsRange = {
-  min: number;
-  max: number;
-};
+import { StarsRange, FetchRandomReposParams } from "../types/index";
 
 export const data = new SlashCommandBuilder()
 .setName('explore')
@@ -28,7 +24,7 @@ export async function execute(interaction: ChatInputCommandInteraction){
         min: Number(stars_min) ?? 0, max: Number(stars_max) ?? 1000000
     }: undefined;
 
-    const repos = await fetchRandomRepos({ language, topic, stars, year, count: 3 });
+    const repos = await fetchRandomRepos({ language, topic, stars, year, count: 3 } as FetchRandomReposParams);
     if(!repos.length){
         await interaction.editReply('🚨No repositories found with the given filters. Give a retry or try different filters!');
         return;
