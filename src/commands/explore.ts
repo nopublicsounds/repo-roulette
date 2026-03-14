@@ -1,0 +1,41 @@
+import { ChatInputCommandInteraction, SlashCommandBuilder } from 'discord.js';
+import { fetchRandomRepos } from '../lib/github';
+
+type StarsRange = {
+  min: number;
+  max: number;
+};
+
+export const data = new SlashCommandBuilder()
+.setName('explore')
+.setDescription('Explore random GitHub repositories!🎲')
+.addStringOption(opt => opt.setName('language').setDescription('ex. C++, Javascript, Python').setRequired(false))
+.addStringOption(opt => opt.setName('topic').setDescription('ex. discord-api, nextjs, game').setRequired(false))
+.addStringOption(opt => opt.setName('stars_max').setDescription('Maximum stars').setRequired(false))
+.addStringOption(opt => opt.setName('stars_min').setDescription('Minimum stars').setRequired(false))
+.addStringOption(opt => opt.setName('year').setDescription('ex. 2021').setRequired(false));
+
+export async function execute(interaction: ChatInputCommandInteraction){
+    await interaction.deferReply();
+    
+    const language = interaction.options.getString('language') ?? undefined;
+    const topic = interaction.options.getString('topic') ?? undefined;
+    const stars_min = interaction.options.getString('stars_min');
+    const stars_max = interaction.options.getString('stars_max');
+    const year = interaction.options.getString('year') ? parseInt(interaction.options.getString('year')!) : undefined;
+
+    const stars: StarsRange | undefined = stars_min || stars_max ? {
+        min: Number(stars_min) ?? 0, max: Number(stars_max) ?? 1000000
+    }: undefined;
+
+    const repos = await fetchRandomRepos({ language, topic, stars, year, count: 3 });
+    if(!repos.length){
+        await interaction.editReply('🚨No repositories found with the given filters. Give a retry or try different filters!');
+        return;
+    }
+
+    const lines = repos.map(r => {
+        return `**[${r.full_name}](${r.html_url})** ⭐${r.stargazers_count} (${r.language ?? "unknown"})\n${r.description ?? ""}`;
+    }).join('\n\n');
+    await interaction.editReply(lines);
+}

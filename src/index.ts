@@ -2,6 +2,7 @@ import dotenv from 'dotenv';
 import { Client, GatewayIntentBits, Collection, Events, ChatInputCommandInteraction } from 'discord.js';
 dotenv.config();
 import * as ping from './commands/ping';
+import * as explore from './commands/explore';
 
 interface Command{
     data: {
@@ -15,6 +16,7 @@ const client = new Client({
 });
 client.commands = new Collection<string, Command>();
 client.commands.set(ping.data.name, ping as unknown as Command);
+client.commands.set(explore.data.name, explore as unknown as Command);
 
 client.once(Events.ClientReady, () => {
     console.log(`Logged in as ${client.user?.tag}!`);
