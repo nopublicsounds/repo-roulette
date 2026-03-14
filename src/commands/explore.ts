@@ -20,6 +20,9 @@ export async function execute(interaction: ChatInputCommandInteraction){
     const stars_max = interaction.options.getString('stars_max');
     const year = interaction.options.getString('year') ? parseInt(interaction.options.getString('year')!) : undefined;
 
+    console.log(`[explore] user=${interaction.user.tag} language=${language} topic=${topic} stars=${stars_min}..${stars_max} year=${year}`);
+
+
     const stars: StarsRange | undefined = stars_min || stars_max ? {
         min: Number(stars_min) ?? 0, max: Number(stars_max) ?? 1000000
     }: undefined;
