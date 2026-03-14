@@ -1,4 +1,4 @@
-import { fetchRandomRepos } from "./src/index.js";
+import { fetchRandomRepos } from "./src/lib/github.js";
 import chalk from 'chalk';
 
 const tests = [
