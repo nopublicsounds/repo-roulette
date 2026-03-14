@@ -14,6 +14,8 @@
     "typescript": "^5.9.3"
   },
   "scripts": {
-    "dev": "tsx src/index.ts"
+    "dev": "tsx src/index.ts",
+    "register": "tsx src/register.ts",
+    "build": "tsc"
   }
 }
