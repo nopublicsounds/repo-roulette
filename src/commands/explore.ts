@@ -1,15 +1,16 @@
 import { ChatInputCommandInteraction, SlashCommandBuilder } from 'discord.js';
 import { fetchRandomRepos } from '../lib/github';
 import { StarsRange, FetchRandomReposParams } from "../types/index";
+import { EmbedBuilder } from 'discord.js';
 
 export const data = new SlashCommandBuilder()
-.setName('explore')
-.setDescription('Explore random GitHub repositories!🎲')
-.addStringOption(opt => opt.setName('language').setDescription('ex. C++, Javascript, Python').setRequired(false))
-.addStringOption(opt => opt.setName('topic').setDescription('ex. discord-api, nextjs, game').setRequired(false))
-.addStringOption(opt => opt.setName('stars_max').setDescription('Maximum stars').setRequired(false))
-.addStringOption(opt => opt.setName('stars_min').setDescription('Minimum stars').setRequired(false))
-.addStringOption(opt => opt.setName('year').setDescription('ex. 2021').setRequired(false));
+    .setName('explore')
+    .setDescription('Explore random GitHub repositories!🎲')
+    .addStringOption(opt => opt.setName('language').setDescription('ex. C++, Javascript, Python').setRequired(false))
+    .addStringOption(opt => opt.setName('topic').setDescription('ex. discord-api, nextjs, game').setRequired(false))
+    .addStringOption(opt => opt.setName('stars_max').setDescription('Maximum stars').setRequired(false))
+    .addStringOption(opt => opt.setName('stars_min').setDescription('Minimum stars').setRequired(false))
+    .addStringOption(opt => opt.setName('year').setDescription('ex. 2021').setRequired(false));
 
 export async function execute(interaction: ChatInputCommandInteraction){
     await interaction.deferReply();
@@ -33,8 +34,18 @@ export async function execute(interaction: ChatInputCommandInteraction){
         return;
     }
 
-    const lines = repos.map(r => {
-        return `**[${r.full_name}](${r.html_url})** ⭐${r.stargazers_count} (${r.language ?? "unknown"})\n${r.description ?? ""}`;
-    }).join('\n\n');
-    await interaction.editReply(lines);
+    const embed = new EmbedBuilder()
+    .setTitle('🎲 Random GitHub Repositories')
+    .setDescription('Here are your some random GitHub repos!')
+    .setColor(0x7289DA)
+    .addFields(
+        repos.map(r => ({
+            name: `${r.full_name} ⭐${r.stargazers_count}`,
+            value: `${r.description ?? '*No description*'}\n🔗 ${r.html_url}`,
+        }))
+    )
+    .setTimestamp()
+    .setFooter({ text: 'Data fetched from GitHub' });
+
+    await interaction.editReply({ embeds: [embed] });
 }
