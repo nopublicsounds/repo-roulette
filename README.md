@@ -1,4 +1,4 @@
-# Repository Roulette
+# Repository Explorer
 
 > Discover random GitHub repositories you never knew existed 🎲
 
