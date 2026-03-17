@@ -1,8 +1,8 @@
 import dotenv from 'dotenv';
 dotenv.config();
 import { REST, Routes } from 'discord.js';
-import * as ping from './commands/ping';
-import * as explore from './commands/explore';
+import * as ping from './commands/ping.js';
+import * as explore from './commands/explore.js';
 
 const rest = new REST().setToken(process.env.DISCORD_TOKEN!);
 

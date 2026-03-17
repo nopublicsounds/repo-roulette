@@ -1,6 +1,6 @@
 import { ChatInputCommandInteraction, SlashCommandBuilder } from 'discord.js';
-import { fetchRandomRepos } from '../lib/github';
-import { StarsRange, FetchRandomReposParams } from "../types/index";
+import { fetchRandomRepos } from '../lib/github.js';
+import { StarsRange, FetchRandomReposParams } from "../types/index.js";
 import { EmbedBuilder } from 'discord.js';
 
 export const data = new SlashCommandBuilder()

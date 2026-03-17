@@ -1,9 +1,9 @@
 import dotenv from 'dotenv';
 import { Client, GatewayIntentBits, Collection, Events, ChatInputCommandInteraction } from 'discord.js';
 dotenv.config();
-import * as ping from './commands/ping';
-import * as explore from './commands/explore';
-import { Command } from './types/index';
+import * as ping from './commands/ping.js';
+import * as explore from './commands/explore.js';
+import { Command } from './types/index.js';
 
 
 const client = new Client({

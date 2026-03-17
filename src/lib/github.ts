@@ -1,6 +1,6 @@
 import { Octokit  } from "@octokit/rest";
 import { components } from "@octokit/openapi-types";
-import { FetchRandomReposParams } from "../types/index";
+import { FetchRandomReposParams } from "../types/index.js";
 type Repo = components["schemas"]["repo-search-result-item"];
 
 
